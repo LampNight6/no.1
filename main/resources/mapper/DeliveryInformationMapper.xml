@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.DeliveryInformationMapper">
+  <resultMap id="BaseResultMap" type="pojo.DeliveryInformation">
+    <id column="orderId" jdbcType="VARCHAR" property="orderid" />
+    <result column="sendId" jdbcType="VARCHAR" property="sendid" />
+    <result column="bill_status" jdbcType="INTEGER" property="billStatus" />
+    <result column="disstribution_status" jdbcType="INTEGER" property="disstributionStatus" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from delivery_information
+    where orderId = #{orderid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="pojo.DeliveryInformation">
+    insert into delivery_information (orderId, sendId, bill_status, 
+      disstribution_status)
+    values (#{orderid,jdbcType=VARCHAR}, #{sendid,jdbcType=VARCHAR}, #{billStatus,jdbcType=INTEGER}, 
+      #{disstributionStatus,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="java.lang.Integer">
+    update delivery_information
+    set
+      bill_status = 1
+
+    where orderId = #{orderid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey2" parameterType="java.lang.Integer">
+    update delivery_information
+    set
+      disstribution_status= 2
+
+    where orderId = #{orderid,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select orderId, sendId, bill_status, disstribution_status
+    from delivery_information
+    where orderId = #{orderid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select orderId, sendId, bill_status, disstribution_status
+    from delivery_information
+  </select>
+</mapper>

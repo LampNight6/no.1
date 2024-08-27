@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.tg.book.dal.mapper.mbg.SupplierMapper">
+  <resultMap id="BaseResultMap" type="org.tg.book.dal.po.mbg.Supplier">
+    <id column="Id" jdbcType="VARCHAR" property="id" />
+    <result column="Name" jdbcType="VARCHAR" property="name" />
+    <result column="goodsId" jdbcType="VARCHAR" property="goodsid" />
+    <result column="suplyTime" jdbcType="TIMESTAMP" property="suplytime" />
+    <result column="amount" jdbcType="INTEGER" property="amount" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from supplier
+    where Id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="org.tg.book.dal.po.mbg.Supplier">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.String">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into supplier (Name, goodsId, suplyTime, 
+      amount)
+    values (#{name,jdbcType=VARCHAR}, #{goodsid,jdbcType=VARCHAR}, #{suplytime,jdbcType=TIMESTAMP}, 
+      #{amount,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="org.tg.book.dal.po.mbg.Supplier">
+    update supplier
+    set Name = #{name,jdbcType=VARCHAR},
+      goodsId = #{goodsid,jdbcType=VARCHAR},
+      suplyTime = #{suplytime,jdbcType=TIMESTAMP},
+      amount = #{amount,jdbcType=INTEGER}
+    where Id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select Id, Name, goodsId, suplyTime, amount
+    from supplier
+    where Id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select Id, Name, goodsId, suplyTime, amount
+    from supplier
+  </select>
+</mapper>

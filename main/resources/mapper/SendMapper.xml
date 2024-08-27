@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.SendMapper">
+  <resultMap id="BaseResultMap" type="pojo.Send">
+    <id column="sendId" jdbcType="VARCHAR" property="sendid" />
+    <result column="userId" jdbcType="VARCHAR" property="userid" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from send
+    where sendId = #{sendid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="pojo.Send">
+    insert into send (sendId, userId, password, 
+      name, phone)
+    values (#{sendid,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="pojo.Send">
+    update send
+    set userId = #{userid,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR}
+    where sendId = #{sendid,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select sendId, userId, password, name, phone
+    from send
+    where sendId = #{sendid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultType="pojo.Send">
+    select sendId, userId, password, name, phone
+    from send
+  </select>
+</mapper>

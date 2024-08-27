@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.GoodsMapper">
+  <resultMap id="BaseResultMap" type="pojo.Goods">
+    <id column="goodsId" jdbcType="VARCHAR" property="goodsid" />
+    <result column="goodsName" jdbcType="VARCHAR" property="goodsname" />
+    <result column="storeId" jdbcType="VARCHAR" property="storeid" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="size" jdbcType="DOUBLE" property="size" />
+    <result column="amount" jdbcType="INTEGER" property="amount" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from goods
+    where goodsId = #{goodsid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="pojo.Goods">
+    insert into goods (goodsId, goodsName, storeId, 
+      type, size, amount)
+    values (#{goodsid,jdbcType=VARCHAR}, #{goodsname,jdbcType=VARCHAR}, #{storeid,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{size,jdbcType=DOUBLE}, #{amount,jdbcType=INTEGER})
+  </insert>
+
+  <update id="update_good_been_sold" parameterType="java.util.Map">
+    UPDATE goods
+    SET amount = amount-#{num, jdbcType=INTEGER}
+    WHERE goodsId = #{goodsid, jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select goodsId, goodsName, storeId, type, size, amount
+    from goods
+    where goodsId = #{goodsid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select goodsId, goodsName, storeId, type, size, amount
+    from goods
+  </select>
+  <select id="selectByStoreId" parameterType="int" resultType="pojo.Goods">
+    SELECT * FROM goods WHERE storeId = #{storeId}
+  </select>
+
+
+
+</mapper>

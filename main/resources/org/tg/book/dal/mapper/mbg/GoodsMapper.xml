@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.tg.book.dal.mapper.mbg.GoodsMapper">
+  <resultMap id="BaseResultMap" type="org.tg.book.dal.po.mbg.Goods">
+    <id column="goodsId" jdbcType="VARCHAR" property="goodsid" />
+    <result column="goodsName" jdbcType="VARCHAR" property="goodsname" />
+    <result column="storeId" jdbcType="VARCHAR" property="storeid" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="amount" jdbcType="INTEGER" property="amount" />
+    <result column="size" jdbcType="DOUBLE" property="size" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from goods
+    where goodsId = #{goodsid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="org.tg.book.dal.po.mbg.Goods">
+    insert into goods (goodsId, goodsName, storeId, 
+      type, amount, size)
+    values (#{goodsid,jdbcType=VARCHAR}, #{goodsname,jdbcType=VARCHAR}, #{storeid,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{amount,jdbcType=INTEGER}, #{size,jdbcType=DOUBLE})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="org.tg.book.dal.po.mbg.Goods">
+    update goods
+    set goodsName = #{goodsname,jdbcType=VARCHAR},
+      storeId = #{storeid,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=INTEGER},
+      size = #{size,jdbcType=DOUBLE}
+    where goodsId = #{goodsid,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select goodsId, goodsName, storeId, type, amount, size
+    from goods
+    where goodsId = #{goodsid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select goodsId, goodsName, storeId, type, amount, size
+    from goods
+  </select>
+</mapper>

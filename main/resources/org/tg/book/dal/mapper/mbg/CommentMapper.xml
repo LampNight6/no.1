@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.tg.book.dal.mapper.mbg.CommentMapper">
+  <resultMap id="BaseResultMap" type="org.tg.book.dal.po.mbg.Comment">
+    <id column="orderId" jdbcType="VARCHAR" property="orderid" />
+    <result column="sendId" jdbcType="VARCHAR" property="sendid" />
+    <result column="userId" jdbcType="VARCHAR" property="userid" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="grand" jdbcType="INTEGER" property="grand" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from comment
+    where orderId = #{orderid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="org.tg.book.dal.po.mbg.Comment">
+    insert into comment (orderId, sendId, userId, 
+      content, grand)
+    values (#{orderid,jdbcType=VARCHAR}, #{sendid,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, 
+      #{content,jdbcType=VARCHAR}, #{grand,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="org.tg.book.dal.po.mbg.Comment">
+    update comment
+    set sendId = #{sendid,jdbcType=VARCHAR},
+      userId = #{userid,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      grand = #{grand,jdbcType=INTEGER}
+    where orderId = #{orderid,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select orderId, sendId, userId, content, grand
+    from comment
+    where orderId = #{orderid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select orderId, sendId, userId, content, grand
+    from comment
+  </select>
+</mapper>

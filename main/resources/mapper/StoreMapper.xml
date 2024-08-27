@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.StoreMapper">
+  <resultMap id="BaseResultMap" type="pojo.Store">
+    <id column="storeId" jdbcType="INTEGER" property="storeid" />
+    <result column="storeName" jdbcType="VARCHAR" property="storename" />
+    <result column="storeAddress" jdbcType="VARCHAR" property="storeaddress" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from store
+    where storeId = #{storeid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="pojo.Store">
+    insert into store (storeId, storeName, storeAddress
+      )
+    values (#{storeid,jdbcType=INTEGER}, #{storename,jdbcType=VARCHAR}, #{storeaddress,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="pojo.Store">
+    update store
+    set storeName = #{storename,jdbcType=VARCHAR},
+      storeAddress = #{storeaddress,jdbcType=VARCHAR}
+    where storeId = #{storeid,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select storeId, storeName, storeAddress
+    from store
+    where storeId = #{storeid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select storeId, storeName, storeAddress
+    from store
+  </select>
+</mapper>

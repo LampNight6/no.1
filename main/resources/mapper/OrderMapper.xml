@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.OrderMapper">
+  <resultMap id="BaseResultMap" type="pojo.Order">
+    <id column="orderId" jdbcType="INTEGER" property="orderid" />
+    <result column="userId" jdbcType="VARCHAR" property="userid" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="goodsId" jdbcType="VARCHAR" property="goodsid" />
+
+    <result property="goodsName" column="goodsName"/>
+    <result property="sendid" column="sendId"/>
+    <result property="billStatus" column="bill_status"/>
+    <result property="distributionStatus" column="disstribution_status"/> <!-- 明确指定映射关系 *******-->
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="int">
+    delete from bill
+    where orderId = #{orderid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="pojo.Order">
+    insert into bill (userId, address,goodsId)
+    values ( #{userid,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR},
+      #{goodsid,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="pojo.Order">
+    update bill
+    set userId = #{userid,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      goodsId = #{goodsid,jdbcType=VARCHAR}
+    where orderId = #{orderid,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectOrderList" resultType="Order">
+    SELECT
+      o.orderId,
+      c.username,
+      o.address,
+      g.goodsName,
+      d.bill_status as billStatus,
+      d.disstribution_status as distributionStatus
+    FROM
+      bill o
+        JOIN client c ON o.userId = c.userId
+        JOIN goods g ON g.goodsId=o.goodsId
+        JOIN delivery_information d on d.orderId=o.orderId
+    WHERE
+      1=1
+  </select>
+
+<!--  <select id="selectOrdersById" resultType="pojo.Order">-->
+<!--    select o.orderId,g.goodsName,c.userName,c.telephone,d.bill_status-->
+<!--    from bill o-->
+<!--           JOIN goods g ON o.goodsId = g.goodsId-->
+<!--           JOIN client c ON c.userId=o.userID-->
+<!--           LEFT JOIN delivery_information d ON o.orderId = d.orderId-->
+<!--    where  o.userId=#{userId,jdbcType=VARCHAR};-->
+<!--  </select>-->
+
+  <!-- orders-mapper.xml 文件 -->
+  <select id="selectOrdersWithGoodsInfo" parameterType="java.lang.String" resultType="Order">
+    SELECT
+      o.orderId,
+      o.userId,
+      o.address,
+      o.goodsId,
+      g.goodsName,
+      d.sendId,
+      d.bill_status  as billStatus,
+      d.disstribution_status as distributionStatus
+    FROM
+      bill o
+        JOIN goods g ON o.goodsId = g.goodsId
+        LEFT JOIN delivery_information d ON o.orderId = d.orderId
+    WHERE
+      o.userId =  #{userId,jdbcType=VARCHAR};
+
+  </select>
+
+
+<!--  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultType="Order">-->
+<!--    select orderId, userId, address, goodsId-->
+<!--    from bill-->
+<!--    where userId = #{orderid,jdbcType=VARCHAR}-->
+<!--  </select>-->
+  <select id="selectAll" resultMap="BaseResultMap">
+    select orderId, userId, address, goodsId
+    from bill
+  </select>
+</mapper>

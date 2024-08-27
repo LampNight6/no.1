@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.tg.book.dal.mapper.mbg.OrderMapper">
+  <resultMap id="BaseResultMap" type="org.tg.book.dal.po.mbg.Order">
+    <id column="orderId" jdbcType="INTEGER" property="orderid" />
+    <result column="userId" jdbcType="VARCHAR" property="userid" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="goodsId" jdbcType="VARCHAR" property="goodsid" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from order
+    where orderId = #{orderid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.tg.book.dal.po.mbg.Order">
+    insert into order (orderId, userId, address, 
+      goodsId)
+    values (#{orderid,jdbcType=INTEGER}, #{userid,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{goodsid,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="org.tg.book.dal.po.mbg.Order">
+    update order
+    set userId = #{userid,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      goodsId = #{goodsid,jdbcType=VARCHAR}
+    where orderId = #{orderid,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select orderId, userId, address, goodsId
+    from order
+    where orderId = #{orderid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select orderId, userId, address, goodsId
+    from order
+  </select>
+</mapper>
